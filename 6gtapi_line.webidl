@@ -6,16 +6,19 @@ There are reasons for this API even in case of virtual line, as wireless and pac
 */
 
 interface TLine {
- Call createCall (TAddress local, String remote);
- Call? takeCall ();
+ Call createCall(TAddress local, String remote);
+ Call? takeCall();
  sequence <TAddress> getLocalAddresses ();
- Promise <Call> unpark (String call);
+ Promise <Call> unpark(String call);
  callback onincomingcall void();
  callback onmonitorcall void();
  callback oninvite void(Invitation);
- Promise <Conference?> join (String convenor, boolean hidden);
+ Promise <Conference?> join(String convenor, boolean hidden);
  callback onjoin Conference? (TAddress);
  Call createCall3(TAddress local, String cg, String cd); /*3rd party call control*/
+ Conference createConference(TAddress local, String subject, Object policy, sequence<MediaStream> streams); /*Create a conference... How did I forget this?*/
+ boolean checkState(String state); /*I could not make it enum!*/
+ callback onstatechange void();
 }
 
 /*Extension to telephony*/

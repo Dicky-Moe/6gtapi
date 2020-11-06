@@ -1,8 +1,8 @@
 /*Helper interface. TODO*/
 interface Bearer{
-attribute String BearerType
-attribute Number Bitrate
-attribute String QoSClass //CBR, rtVBR, nrtVBR, ABR, UBR; RT, BE
+ attribute String BearerType;
+ attribute Number Bitrate;
+ attribute String QoSClass; //CBR, rtVBR, nrtVBR, ABR, UBR; RT, BE
 }
 
 interface MediaStream{
@@ -28,26 +28,26 @@ interface Call{
  attribute String Subject;
  readonly attribute State enum {New, Dialing, Proceeding, Ringing, Waiting, Connected, Disconnected, Idle, Sent, Delivered, Unknown};
  attribute Bearer Bearer;
- readonly attribute enum Direction {Incoming, Outgoing, Transit, Internal, 3rdParty};
+ readonly attribute Direction enum{Incoming, Outgoing, Transit, Internal, 3rdParty};
  readonly attribute LowLevel LowLevel;
  attribute Priority enum {};
  attribute int CUG;
  readonly attribute String AdviceOfCharge;
  attribute boolean unknownMediaType;
- boolean checkState (String state);
- sequence <MediaStream> getActiveMediaStreams ();
+ boolean checkState(String state);
+ sequence <MediaStream> getActiveMediaStreams();
  sequence <ForwardRecord> getHistory();
  Promise make();
  Promise commit();
- Promise drop (Reason reason, String text);
- Promise <boolean> blindTransfer (String to, Reason reason, String text);
- MediaStream createMediaStrem (String type);
- void replaceMediaStream (MediaStream from, MediaStream to);
- boolean handoff ();
- Promise <boolean> hold ();
- Promise <String> park ();
- Promise transfer (Call consult);
- Promise <boolean> unhold ();
+ Promise drop(Reason reason, String text);
+ Promise <boolean> blindTransfer(String to, Reason reason, String text);
+ MediaStream createMediaStream(String type);
+ void replaceMediaStream(MediaStream from, MediaStream to);
+ boolean handoff();
+ Promise <boolean> hold();
+ Promise <String> park();
+ Promise transfer(Call consult);
+ Promise <boolean> unhold();
  callback onconnect void(Call);
  callback ondisconnect void(Call);
  callback onstatechange void(Call);
@@ -62,8 +62,8 @@ interface Call{
 /*Main interface. Globally accessible e.g. 
  var c=Telephony.createCall(Telephony.getLocalAddresses[0],"+15556789");*/
 interface Telephony{
- Call createCall (TAddress local, String remote);
- Call? takeCall ();
+ Call createCall(TAddress local, String remote);
+ Call? takeCall();
  sequence <TAddress> getLocalAddresses ();
  Promise <Call> unpark (String call);
  sequence <TDevice> getSourceDevices (String type);
@@ -86,14 +86,14 @@ interface Conference{
  attribute Object Policy;
  Promise leave();
  Promise disband();
- Promise <Party> invite (String addr, String reason);
+ Promise <Party> invite(String addr, String reason);
  Promise merge(Call);
- Party getSelf ();
+ Party getSelf();
  callback onadmission boolean? (TAddress);
  callback onotherpartyjoin void(Party);
  callback onotherpartyleave void(Party, Reason);
  callback ondisconnect void(Reason);
- sequence <MediaStream> getMediaStreams;
+ sequence <MediaStream> getMediaStreams();
  callback onwhisper void (Party, any);
 }
 
